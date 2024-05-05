@@ -353,7 +353,7 @@ $TTL    604800
 jangan lupa untuk mengembalikan nameserver ke DNS Master
 **GatkaTrenches dan GatkaRadio**
 ```
-host -t PTR 192.168.2.2
+host -t PTR 10.75.1.2
 ```
 #### Result
 <img src="attachment/topologi.jpeg">
