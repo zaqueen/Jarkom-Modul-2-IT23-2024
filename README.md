@@ -300,7 +300,7 @@ ping airdrop.it23.com -c 5
 ping www.airdrop.it23.com -c 5
 ```
 #### Result
-<img src="attachment/topologi.jpeg">
+<img src="attachment/5.1.jpeg">
 
 testing pada redzone.it23.com
 ```
@@ -308,7 +308,7 @@ ping redzone.it23.com -c 5
 ping www.redzone.it23.com -c 5
 ```
 #### Result
-<img src="attachment/topologi.jpeg">
+<img src="attachment/5.2.jpeg">
 
 testing pada loot.it23.com
 ```
@@ -316,7 +316,7 @@ ping loot.it23.com -c 5
 ping www.loot.it23.com -c 5
 ```
 #### Result
-<img src="attachment/topologi.jpeg">
+<img src="attachment/5.3.jpeg">
 
 ## Soal 6
 ```
@@ -430,3 +430,8 @@ dan melakukan testing dari client.
 ping airdrop.it23.com -c 5
 ping www.airdrop.it23.com -c 5
 ```
+#### Result
+<img src="attachment/7.1.jpeg">
+<img src="attachment/7.2.jpeg">
+<img src="attachment/7.3.jpeg">
+<img src="attachment/7.4.jpeg">
