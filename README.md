@@ -922,4 +922,131 @@ lynx http://10.75.2.5/index.php
 #### Result
 https://github.com/zaqueen/Jarkom-Modul-2-IT23-2024/assets/62441217/9840cedd-ede8-4a37-a91a-80e29d10b9ce
 
+## Soal 14
+```
+Mereka juga belum merasa puas jadi pusat meminta agar web servernya dan load balancer nya diubah menjadi nginx
 
+```
+#### Script
+**Mylta**
+```
+service apache2 stop
+apt-get update
+apt-get install nginx -y
+echo "upstream backend {
+  server 10.75.2.2; # Severny
+  server 10.75.2.3; # Stalber
+}
+
+server {
+  listen 80;
+  server_name mylta.it29.com www.mylta.it23.com;
+
+  location / {
+    proxy_pass http://backend;
+  }
+}
+" > /etc/nginx/sites-available/jarkom
+
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+
+rm /etc/nginx/sites-enabled/default
+
+service nginx restart
+```
+* Stop service apache
+* Install nginx
+* Memasukan konfigurasi ke dalam file jarkom
+* Melakukan simlink file jarkom di sites-available dengan sites-enabled
+* Menghapus default agar tidak menabrak konfigurasi jarkom
+* restart nginx
+
+**stalber, severny, dan lipovka**
+```
+service apache2 stop
+
+apt-get update
+apt-get install nginx -y
+apt install php php-fpm php-mysql -y
+mkdir /var/www/jarkom
+cp /root/lb/worker/index.php /var/www/jarkom/index.php
+
+service php7.0-fpm start
+
+echo -e "server {
+        listen 80;
+
+        root /var/www/jarkom;
+        index index.php index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+
+        location ~ /\.ht {
+                deny all;
+        }
+}" > /etc/nginx/sites-available/jarkom
+
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+
+rm /etc/nginx/sites-enabled/default
+
+service nginx restart
+```
+* Menginstall modul yang diperlukan
+* Menjalankan service php7.2-fpm
+* Masukan konfigurasi worker ke dalam /etc/nginx/sites-available/jarkom
+* Simlink file jarkom
+* Menghapus file default
+* Restart nginx
+* Lakukan untuk semua worker
+
+#### Result
+<img src="attachment/14.1.jpeg">
+<img src="attachment/14.2.jpeg">
+
+## Soal 15
+
+## Soal 16
+```
+Karena dirasa kurang aman karena masih memakai IP, markas ingin akses ke mylta memakai mylta.xxx.com dengan alias www.mylta.xxx.com (sesuai web server terbaik hasil analisis kalian)
+
+```
+
+#### Script
+**Pochinki**
+```
+echo -e 'zone "mylta.it23.com" {
+                type master;
+                file "/etc/bind/jarkom/mylta.it23.com";
+};' >> /etd/bind/named.conf.local
+
+echo -e "
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     mylta.it23.com. root.mylta.it23.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      mylta.it29.com.
+@       IN      A       10.75.2.5
+www     IN      CNAME   mylta.it23.com
+@       IN      AAAA    ::1 " > /etc/bind/jarkom/mylta.it23.com
+```
+
+#### Result
+<img src="attachment/16.1.jpeg">
+<img src="attachment/16.2.jpeg">
