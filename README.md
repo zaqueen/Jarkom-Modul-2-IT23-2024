@@ -514,7 +514,7 @@ ping medkit.airdrop.it23.com
 ```
 
 #### Result
-<img src="attachment/8_subdomain">
+<img src="attachment/8_subdomain.jpeg">
 
 ## Soal 9
 > Terkadang red zone yang pada umumnya di bombardir artileri akan dijatuhi bom oleh pesawat tempur. Untuk melindungi warga, kita diperlukan untuk membuat sistem peringatan air raid dan memasukkannya ke subdomain siren.redzone.xxxx.com dalam folder siren dan pastikan dapat diakses secara mudah dengan menambahkan alias www.siren.redzone.xxxx.com dan mendelegasikan subdomain tersebut ke Georgopol dengan alamat IP menuju radar di Severny.
@@ -704,7 +704,7 @@ ping google.com -c 5
 ```
 
 #### Result
-<img src="attachment/11_DNSforwarder">
+<img src="attachment/11_DNSforwarder.jpeg">
 
 ## Soal 12
 > Karena pusat ingin sebuah website yang ingin digunakan untuk memantau kondisi markas lainnya maka deploy lah webiste ini (cek resource yg lb) pada severny menggunakan apache.
@@ -797,7 +797,7 @@ lynx http://10.75.2.3/index.php
 ```
 
 ### Result
-<img src="attachment/12_lynx">
+<img src="attachment/12_lynx.jpeg">
 
 ## Soal 13
 > Tapi pusat merasa tidak puas dengan performanya karena traffic yag tinggi maka pusat meminta kita memasang load balancer pada web nya, dengan Severny, Stalber, Lipovka sebagai worker dan Mylta sebagai Load Balancer menggunakan apache sebagai web server nya dan load balancernya.
@@ -920,4 +920,4 @@ lynx http://10.75.2.5/index.php
 ```
 
 #### Result
-<img src="attachment/13_lbapache.mp4">
+<img src="attachment/13_lbapache.gif">
