@@ -182,8 +182,11 @@ Lakukan [setup](#Bashrc) terlebih dahulu
 #### Script
 Disini kita akan membuat domain dengan nama airdrop.it23.com dengan alias www.airdrop.it23.com
 
-**Pochinki**
+**Pochinki**  
 ```
+#!/bin/bash
+
+# Buat domain airdrop.it23.com
 echo 'zone "airdrop.it23.com" {
 	type master;
 	file "/etc/bind/jarkom/airdrop.it23.com";
@@ -198,7 +201,7 @@ echo '
 ; BIND data file for local loopback interface
 ;
 $TTL    604800
-@       IN      SOA     airdrop.it23.com. root.airdrop.it23.com. (
+@       IN      SOA     airdrop.it23.com. airdrop.it23.com. (
                         2024050301      ; Serial
                          604800         ; Refresh
                           86400         ; Retry
@@ -209,9 +212,11 @@ $TTL    604800
 @       IN      A       10.75.2.2     ; IP Stalber
 www     IN      CNAME   airdrop.it23.com.' > /etc/bind/jarkom/airdrop.it23.com
 
+service bind9 restart
+
 ```
-**GatkaTrenches dan GatkaRadio**
-Jangan lupa untuk setup nameserver agar diarahkan ke IP Pochinki.
+**GatkaTrenches dan GatkaRadio**  
+Jangan lupa untuk setup nameserver dan arahkan ke IP Pochinki.
 
 ## Soal 3
 ```
@@ -225,6 +230,9 @@ Disini kita akan membuat domain dengan nama redzone.it23.com dengan alias www.re
 
 **Pochinki**
 ```
+#!/bin/bash
+
+# Buat domain redzone.it23.com
 echo 'zone "redzone.it23.com" {
 	type master;
 	file "/etc/bind/jarkom/redzone.it23.com";
@@ -237,7 +245,7 @@ echo '
 ; BIND data file for local loopback interface
 ;
 $TTL    604800
-@       IN      SOA     redzone.it23.com. root.redzone.it23.com. (
+@       IN      SOA     redzone.it23.com. redzone.it23.com. (
                         2024050301      ; Serial
                          604800         ; Refresh
                           86400         ; Retry
@@ -247,9 +255,11 @@ $TTL    604800
 @       IN      NS      redzone.it23.com.
 @       IN      A       10.75.2.3     ; IP Severny
 www     IN      CNAME   redzone.it23.com.' > /etc/bind/jarkom/redzone.it23.com
+
+service bind9 restart
 ```
-**GatkaTrenches dan GatkaRadio**
-Jangan lupa untuk setup nameserver agar diarahkan ke IP Pochinki.
+**GatkaTrenches dan GatkaRadio**  
+Jangan lupa untuk setup nameserver dan arahkan ke IP Pochinki.
 
 ## Soal 4
 ```
@@ -260,7 +270,7 @@ Lakukan [setup](#Bashrc) terlebih dahulu
 #### Script
 Disini kita akan membuat domain dengan nama loot.it23.com dengan alias www.loot.it23.com
 
-**Pochinki**
+**Pochinki**  
 ```
 echo 'zone "loot.it23.com" {
 	type master;
@@ -285,14 +295,14 @@ $TTL    604800
 @       IN      A       10.75.2.5     ; IP Mylta
 www     IN      CNAME   loot.it23.com.' > /etc/bind/jarkom/loot.it23.com
 ```
-**GatkaTrenches dan GatkaRadio**
-Jangan lupa untuk setup nameserver agar diarahkan ke IP Pochinki.
+**GatkaTrenches dan GatkaRadio**  
+Jangan lupa untuk setup nameserver dan arahkan ke IP Pochinki.
 
 ## Soal 5
 ```
 Pastikan domain-domain tersebut dapat diakses oleh seluruh komputer (client) yang berada di Erangel
 ```
-**GatkaTrenches dan GatkaRadio**
+**GatkaTrenches dan GatkaRadio**  
 #### Script
 testing pada airdrop.it23.com
 ```
@@ -325,7 +335,10 @@ Beberapa daerah memiliki keterbatasan yang menyebabkan hanya dapat mengakses dom
 Lakukan [setup](#Bashrc) terlebih dahulu.
 
 #### Script
+**Pochinki**  
 ```
+#!/bin/bash
+
 # Buat reverse DNS (Record PTR)
 echo 'zone "2.75.10.in-addr.arpa" {
     type master;
@@ -334,7 +347,7 @@ echo 'zone "2.75.10.in-addr.arpa" {
 
 cp /etc/bind/db.local /etc/bind/jarkom/2.75.10.in-addr.arpa
 
-echo '
+echo ';
 ;
 ; BIND data file for local loopback interface
 ;
@@ -346,14 +359,30 @@ $TTL    604800
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
 ;
-2.75.10.in-addr.arpa.   IN      NS      redzone.it23.com.
-3                       IN      PTR     redzone.it23.com.   
-' > /etc/bind/jarkom/2.75.10.in-addr.arpa
+2.75.10.in-addr.arpa.    IN      NS      redzone.it23.com.
+3                       IN      PTR     redzone.it23.com.' > /etc/bind/jarkom/2.75.10.in-addr.arpa
+
+service bind9 restart
 ```
-jangan lupa untuk mengembalikan nameserver ke DNS Master
-**GatkaTrenches dan GatkaRadio**
+**GatkaTrenches dan GatkaRadio**  
 ```
-host -t PTR 10.75.1.2
+#!/bin/bash
+
+# Set nameserver kembali ke Ip Erangel
+echo 'nameserver 192.168.122.1' > /etc/resolv.conf
+
+# Install package dnsutils
+apt-get update
+apt-get install dnsutils -y
+
+# Kembalikan nameserver ke Ip Pochinki & Georgopol
+echo '
+nameserver 10.75.1.2
+nameserver 10.75.1.5' > /etc/resolv.conf
+```  
+Testing pada client:
+```
+host -t PTR 10.75.2.3
 ```
 #### Result
 <img src="attachment/topologi.jpeg">
