@@ -920,4 +920,6 @@ lynx http://10.75.2.5/index.php
 ```
 
 #### Result
-<img src="attachment/13_lbapache.gif">
+https://github.com/zaqueen/Jarkom-Modul-2-IT23-2024/assets/62441217/9840cedd-ede8-4a37-a91a-80e29d10b9ce
+
+
